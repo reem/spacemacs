@@ -16,8 +16,7 @@
         evil-matchit
         flycheck
         js-doc
-        js2-mode
-        js2-refactor
+        smartparens
         tern
         web-beautify
         web-mode
@@ -54,17 +53,10 @@
   (add-hook 'react-mode-hook 'spacemacs/js-doc-require)
   (spacemacs/js-doc-set-key-bindings 'react-mode))
 
-(defun react//setup-imenu ()
-  (setq imenu-create-index-function #'js2-mode-create-imenu-index))
-
-(defun react/post-init-js2-mode ()
-  (add-hook 'react-mode-hook 'react//setup-imenu)
-  (add-hook 'react-mode-hook 'js2-imenu-extras-mode)
-  (add-hook 'react-mode-hook 'js2-minor-mode))
-
-(defun react/post-init-js2-refactor ()
-  (add-hook 'react-mode-hook 'spacemacs/js2-refactor-require)
-  (spacemacs/js2-refactor-set-key-bindings 'react-mode))
+(defun react/post-init-smartparens ()
+  (if dotspacemacs-smartparens-strict-mode
+      (add-hook 'react-mode-hook #'smartparens-strict-mode)
+    (add-hook 'react-mode-hook #'smartparens-mode)))
 
 (defun react/post-init-tern ()
   (add-hook 'react-mode-hook 'tern-mode))
